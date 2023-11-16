@@ -5,16 +5,25 @@ import {
   TouchableOpacity,
   TextInput,
   StyleSheet,
+  ScrollView,
+  Image,
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import {
+  faStar as farStar,
+  faLocationDot,
+} from "@fortawesome/free-solid-svg-icons";
 
 const RoutesScreen = () => {
   const [isMap, showMap] = useState(false);
   const buttons = Array.from({ length: 100 }, (_, i) => i + 1);
   const [inputValue, setInputValue] = useState("");
+  const [foundButton, setFoundButton] = useState(null);
 
   const handleBusInput = (text) => {
     setInputValue(text);
+    setFoundButtonActive(text);
   };
 
   const handleMapTouch = () => {
@@ -24,34 +33,86 @@ const RoutesScreen = () => {
   const filteredButtons = buttons.filter(
     (button) => inputValue === "" || button.toString().includes(inputValue)
   );
+  const setFoundButtonActive = (text) => {
+    const found = buttons.find((btn) => btn.toString() === text);
+    setFoundButton(found);
+  };
 
   return (
     <View style={styles.container}>
       {!isMap ? (
         <>
-          <Text style={styles.title}>Алматы > Транспорт > Проезд</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Введите номер маршрута"
-            onChangeText={handleBusInput}
-            value={inputValue}
-          />
+          <View><Text style={styles.title}>
+            <FontAwesomeIcon icon={faLocationDot} /> Алматы
+          </Text>
+          </View>
+          <View style={styles.transportContainer}>
+            <View style={styles.underline2}>
+              <Text style={styles.transportText}>Транспорт</Text>
+            </View>
+            <View>
+              <Text style={styles.transportTextInactive}>Проезд</Text>
+            </View>
+          </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.input}
+              placeholder="Введите номер маршрута"
+              onChangeText={handleBusInput}
+              value={inputValue}
+            />
+            {foundButton && (
+              <TouchableOpacity
+                style={styles.clearButton}
+                onPress={() => setInputValue("")}
+              >
+                <Text style={styles.clearButtonText}>✕</Text>
+              </TouchableOpacity>
+            )}
+            <View style={styles.iconContainer}>
+              <FontAwesomeIcon icon={farStar} style={{ color: "#a5a4a9" }} />
+            </View>
+          </View>
           <View style={styles.tabs}>
-            <Text style={styles.tab}>Автобусы</Text>
-            <Text style={styles.tab}>Троллейбусы</Text>
+            <View style={styles.tabContainer}>
+              <Text style={styles.tabText}>
+                <Image
+                  style={styles.busimg}
+                  source={require("../images/bus2.png")}
+                />{" "}
+                Автобусы
+              </Text>
+              <View style={styles.underline}></View>
+            </View>
+            <View>
+              <Text style={styles.tab}>
+                <Image
+                  style={styles.busimg}
+                  source={require("../images/bus.png")}
+                ></Image>
+                Троллейбусы
+              </Text>
+            </View>
           </View>
-          <View style={styles.grid}>
-            {filteredButtons.map((button) => (
-              <View key={button} style={styles.buttonContainer}>
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={handleMapTouch}
-                >
-                  <Text>{button}</Text>
-                </TouchableOpacity>
-              </View>
-            ))}
-          </View>
+          <ScrollView>
+            <View style={styles.grid}>
+              {filteredButtons.map((button) => (
+                <View key={button} style={styles.buttonContainer}>
+                  <TouchableOpacity
+                    style={[
+                      styles.button,
+                      foundButton === button && {
+                        backgroundColor: "rgb(255, 215, 1)",
+                      },
+                    ]}
+                    onPress={handleMapTouch}
+                  >
+                    <Text style={styles.btnText}>{button}</Text>
+                  </TouchableOpacity>
+                </View>
+              ))}
+            </View>
+          </ScrollView>
         </>
       ) : (
         <>
@@ -87,6 +148,39 @@ const RoutesScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  transportText: {
+    fontWeight: 'bold'
+  },
+  transportContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 10,
+    alignContent: 'center',
+    
+  },
+  tabContainer: {
+    alignItems: "center",
+  },
+  tabText: {
+    padding: 10,
+  },
+  busimg: {
+    width: 20,
+    height: 20,
+  },
+  underline: {
+    borderBottomColor: "rgb(254, 162, 29)",
+    borderBottomWidth: 2,
+    width: "100%",
+    marginBottom: 5,
+  },
+  underline2: {
+    borderBottomColor: "rgb(254, 162, 29)",
+    borderBottomWidth: 2,
+    flexBasis: "50%",
+    marginBottom: 5,
+    alignContent: 'center'
+  },
   container: {
     flex: 1,
     backgroundColor: "white",
@@ -96,11 +190,15 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "yellow",
   },
+  btnText: {
+    fontWeight: "bold",
+  },
   input: {
     height: 40,
     borderColor: "gray",
     borderWidth: 1,
     margin: 10,
+    borderRadius: 10,
   },
   tabs: {
     flexDirection: "row",
@@ -139,16 +237,42 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
+    borderRadius: 10,
   },
   mapContainer: {
-    height: '100%',
+    height: "100%",
     justifyContent: "flex-end",
     alignItems: "center",
   },
   map: {
     ...StyleSheet.absoluteFillObject,
   },
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "gray",
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    marginTop: 10,
+    position: "relative",
+  },
+  clearButton: {
+    position: "absolute",
+    right: 10,
+    padding: 10,
+  },
+  clearButtonText: {
+    color: "yellow",
+    fontWeight: "bold",
+  },
+  input: {
+    flex: 1,
+    height: 40,
+  },
+  iconContainer: {
+    marginLeft: 10,
+  },
 });
 
 export default RoutesScreen;
-
