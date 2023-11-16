@@ -7,14 +7,20 @@ import {
   TouchableOpacity,
   View,
   Switch,
+  ScrollView,
 } from "react-native";
 
 const MenuScreen = () => {
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
-  
+  const [isEnabledNotifications, setIsEnabledNotifications] = useState(false);
+  const toggleSwitchNotifications = () =>
+    setIsEnabledNotifications((previousState) => !previousState);
+
+  const [isEnabledBiometrics, setIsEnabledBiometrics] = useState(false);
+  const toggleSwitchBiometrics = () =>
+    setIsEnabledBiometrics((previousState) => !previousState);
+
   return (
-    <View style={styles_menu.cont}>
+    <ScrollView style={styles_menu.cont}>
       {/* HEADER */}
       <View>
         {/* МОЙ ГОРОД */}
@@ -86,11 +92,11 @@ const MenuScreen = () => {
         <TouchableOpacity style={styles_menu.angle_switch} onPress={() => {}}>
           <Text>Уведомления и звуки</Text>
           <Switch
-            trackColor={{ false: "#767577", true: "#81b0ff" }}
-            thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+            trackColor={{ false: "#767577", true: "#ffc00173" }}
+            thumbColor={isEnabledNotifications ? "rgb(255 160 1)" : "#f4f3f4"}
             ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleSwitch}
-            value={isEnabled}
+            onValueChange={toggleSwitchNotifications}
+            value={isEnabledNotifications}
           />
         </TouchableOpacity>
 
@@ -113,11 +119,12 @@ const MenuScreen = () => {
         <TouchableOpacity style={styles_menu.angle_switch} onPress={() => {}}>
           <Text>Вход по биометрии</Text>
           <Switch
-            trackColor={{ false: "#767577", true: "#81b0ff" }}
-            thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+        //   rgb(255 160 1)
+            trackColor={{ false: "#767577", true: "#ffc00173" }} 
+            thumbColor={isEnabledBiometrics ? "rgb(255 160 1)" : "#f4f3f4"}
             ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleSwitch}
-            value={isEnabled}
+            onValueChange={toggleSwitchBiometrics}
+            value={isEnabledBiometrics}
           />
         </TouchableOpacity>
 
@@ -275,11 +282,14 @@ const MenuScreen = () => {
         <Text style={styles_menu.angle_text}>Версия: 2.7.20</Text>
 
         {/* ВЫЙТИ */}
-        <TouchableOpacity style={styles_menu.angle_text} onPress={() => {}}>
+        <TouchableOpacity
+          style={[styles_menu.angle_text, { marginTop: "7%" }]}
+          onPress={() => {}}
+        >
           <Text>Выйти</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
