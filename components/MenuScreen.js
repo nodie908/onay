@@ -1,7 +1,18 @@
 import { FontAwesome } from "@expo/vector-icons";
-import { Text, Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { useState } from "react";
+import {
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  Switch,
+} from "react-native";
 
 const MenuScreen = () => {
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  
   return (
     <View style={styles_menu.cont}>
       {/* HEADER */}
@@ -22,7 +33,7 @@ const MenuScreen = () => {
           <FontAwesome
             name="angle-right"
             size={30}
-            style={styles_menu.button_header_angleRight}
+            style={styles_menu.angle_right}
           />
         </TouchableOpacity>
 
@@ -42,7 +53,7 @@ const MenuScreen = () => {
           <FontAwesome
             name="angle-right"
             size={30}
-            style={styles_menu.button_header_angleRight}
+            style={styles_menu.angle_right}
           />
         </TouchableOpacity>
 
@@ -62,23 +73,212 @@ const MenuScreen = () => {
           <FontAwesome
             name="angle-right"
             size={30}
-            style={styles_menu.button_header_angleRight}
+            style={styles_menu.angle_right}
           />
         </TouchableOpacity>
       </View>
 
       {/* НАСТРОЙКИ ПРИЛОЖЕНИЯ */}
-      <View style={styles_menu.settings_app}></View>
+      <View style={[styles_menu.settings_app, styles_menu.gap_vertical]}>
+        <Text style={styles_menu.h1}>Настройки приложения</Text>
+
+        {/* УВЕДОМЛЕНИЯ И ЗВУКИ */}
+        <TouchableOpacity style={styles_menu.angle_switch} onPress={() => {}}>
+          <Text>Уведомления и звуки</Text>
+          <Switch
+            trackColor={{ false: "#767577", true: "#81b0ff" }}
+            thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={isEnabled}
+          />
+        </TouchableOpacity>
+
+        {/* СМЕНИТЬ ЯЗЫК */}
+        <TouchableOpacity style={styles_menu.angle_text} onPress={() => {}}>
+          <Text>Сменить язык</Text>
+          <FontAwesome
+            name="angle-right"
+            size={30}
+            style={styles_menu.angle_right}
+          />
+        </TouchableOpacity>
+      </View>
+
       {/* КОД ДОСТУПА */}
-      <View style={styles_menu.access_сode}></View>
+      <View style={[styles_menu.access_сode, styles_menu.gap_vertical]}>
+        <Text style={styles_menu.h1}>Код доступа</Text>
+
+        {/* ВХОД ПО БИОМЕТРИИ */}
+        <TouchableOpacity style={styles_menu.angle_switch} onPress={() => {}}>
+          <Text>Вход по биометрии</Text>
+          <Switch
+            trackColor={{ false: "#767577", true: "#81b0ff" }}
+            thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={isEnabled}
+          />
+        </TouchableOpacity>
+
+        {/* ИЗМЕНИТЬ КОД ДОСТУПА */}
+        <TouchableOpacity style={styles_menu.angle_text} onPress={() => {}}>
+          <Text>Изменить код доступа</Text>
+          <FontAwesome
+            name="angle-right"
+            size={30}
+            style={styles_menu.angle_right}
+          />
+        </TouchableOpacity>
+      </View>
+
       {/* ЛИЧНЫЕ ДАННЫЕ */}
-      <View style={styles_menu.personal_data}></View>
+      <View style={[styles_menu.personal_data, styles_menu.gap_vertical]}>
+        <Text style={styles_menu.h1}>Личные данные</Text>
+
+        {/* НОМЕР ТЕЛЕФОНА */}
+        <TouchableOpacity style={styles_menu.angle_text} onPress={() => {}}>
+          <Text>Номер телефона</Text>
+          <FontAwesome
+            name="angle-right"
+            size={30}
+            style={styles_menu.angle_right}
+          />
+        </TouchableOpacity>
+
+        {/* E-MAIL */}
+        <TouchableOpacity style={styles_menu.angle_text} onPress={() => {}}>
+          <Text>E-mail</Text>
+          <FontAwesome
+            name="angle-right"
+            size={30}
+            style={styles_menu.angle_right}
+          />
+        </TouchableOpacity>
+
+        {/* ПАРОЛЬ */}
+        <TouchableOpacity style={styles_menu.angle_text} onPress={() => {}}>
+          <Text>Пароль</Text>
+          <FontAwesome
+            name="angle-right"
+            size={30}
+            style={styles_menu.angle_right}
+          />
+        </TouchableOpacity>
+
+        {/* УДАЛИТЬ АККАУНТ */}
+        <TouchableOpacity style={styles_menu.angle_text} onPress={() => {}}>
+          <Text style={{ color: "red" }}>Удалить аккаунт</Text>
+          <FontAwesome
+            name="angle-right"
+            size={30}
+            style={styles_menu.angle_right}
+          />
+        </TouchableOpacity>
+      </View>
+
       {/* ДОСТУП */}
-      <View style={styles_menu.access}></View>
+      <View style={[styles_menu.access, styles_menu.gap_vertical]}>
+        <Text style={styles_menu.h1}>Доступ</Text>
+
+        {/* ПОВЫШЕННЫЙ ДОСТУП */}
+        <TouchableOpacity style={styles_menu.angle_text} onPress={() => {}}>
+          <Text>Повышенный доступ</Text>
+          <FontAwesome
+            name="angle-right"
+            size={30}
+            style={styles_menu.angle_right}
+          />
+        </TouchableOpacity>
+
+        {/* ЛИМИТЫ */}
+        <TouchableOpacity style={styles_menu.angle_text} onPress={() => {}}>
+          <Text>Лимиты</Text>
+          <FontAwesome
+            name="angle-right"
+            size={30}
+            style={styles_menu.angle_right}
+          />
+        </TouchableOpacity>
+      </View>
+
       {/* БЕЗОПАСНОСТЬ */}
-      <View style={styles_menu.safety}></View>
+      <View style={[styles_menu.safety, styles_menu.gap_vertical]}>
+        <Text style={styles_menu.h1}>Безопасность</Text>
+
+        {/* КОДОВОЕ СЛОВО */}
+        <TouchableOpacity style={styles_menu.angle_text} onPress={() => {}}>
+          <Text>Повышенный доступ</Text>
+          <FontAwesome
+            name="angle-right"
+            size={30}
+            style={styles_menu.angle_right}
+          />
+        </TouchableOpacity>
+
+        {/* ПИН-КОД ДЛЯ POS ТЕРМИНАЛОВ */}
+        <TouchableOpacity style={styles_menu.angle_text} onPress={() => {}}>
+          <Text>ПИН-код для POS-терминалов</Text>
+          <FontAwesome
+            name="angle-right"
+            size={30}
+            style={styles_menu.angle_right}
+          />
+        </TouchableOpacity>
+
+        {/* ПАРОЛЬ ДЛЯ ОНЛАЙН-ПЛАТЕЖЕЙ */}
+        <TouchableOpacity style={styles_menu.angle_text} onPress={() => {}}>
+          <Text>Пароль для онлайн-платежей</Text>
+          <FontAwesome
+            name="angle-right"
+            size={30}
+            style={styles_menu.angle_right}
+          />
+        </TouchableOpacity>
+      </View>
+
       {/* О ПРИЛОЖЕНИИ */}
-      <View style={styles_menu.about_application}></View>
+      <View style={[styles_menu.about_application, styles_menu.gap_vertical]}>
+        <Text style={styles_menu.h1}>О приложении</Text>
+
+        {/* ПОЛЬЗОВАТЕЛЬСКОЕ СОГЛАШЕНИЕ */}
+        <TouchableOpacity style={styles_menu.angle_text} onPress={() => {}}>
+          <Text>Пользовательское соглашение</Text>
+          <FontAwesome
+            name="angle-right"
+            size={30}
+            style={styles_menu.angle_right}
+          />
+        </TouchableOpacity>
+
+        {/* ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ */}
+        <TouchableOpacity style={styles_menu.angle_text} onPress={() => {}}>
+          <Text>Политика конфиденциальности</Text>
+          <FontAwesome
+            name="angle-right"
+            size={30}
+            style={styles_menu.angle_right}
+          />
+        </TouchableOpacity>
+
+        {/* ОЦЕНИТЬ ПРИЛОЖЕНИЕ */}
+        <TouchableOpacity style={styles_menu.angle_text} onPress={() => {}}>
+          <Text>Оценить приложжение</Text>
+          <FontAwesome
+            name="angle-right"
+            size={30}
+            style={styles_menu.angle_right}
+          />
+        </TouchableOpacity>
+
+        {/* ВЕРСИЯ */}
+        <Text style={styles_menu.angle_text}>Версия: 2.7.20</Text>
+
+        {/* ВЫЙТИ */}
+        <TouchableOpacity style={styles_menu.angle_text} onPress={() => {}}>
+          <Text>Выйти</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -88,25 +288,47 @@ const styles_menu = StyleSheet.create({
   cont: {
     flexDirection: "column",
   },
+  gap_vertical: {
+    marginVertical: "3%",
+  },
+  angle_right: {
+    marginLeft: "auto",
+    color: "grey",
+  },
+  angle_switch: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+    marginVertical: 7,
+    paddingHorizontal: 15,
+  },
+  angle_text: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%",
+    marginVertical: 7,
+    paddingHorizontal: 15,
+  },
+  h1: {
+    color: "black",
+    fontWeight: "bold",
+    marginBottom: 13,
+    paddingHorizontal: 15,
+  },
   // BUTTONS HEADER
   buttons_header: {
     flexDirection: "row",
     alignItems: "center",
     width: "100%",
     marginVertical: 15,
-    paddingHorizontal: 15,
+    marginBottom: "8%",
+    paddingHorizontal: 10,
   },
   buttons_header_view_img: {
     width: 35,
     height: 35,
     marginRight: 10,
-  },
-  button_header_view: {
-    flex: 1,
-  },
-  button_header_angleRight: {
-    marginLeft: "auto",
-    color: "grey",
   },
   icons: {
     width: "100%",
