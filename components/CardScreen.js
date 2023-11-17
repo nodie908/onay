@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { createStackNavigator } from '@react-navigation/stack';
+import {useNavigation } from '@react-navigation/native';
+
 
 
 const styles = {
@@ -77,7 +80,11 @@ const styles = {
     },
 };
 
-const CardScreen = () => {
+const Stack = createStackNavigator();
+
+const CardScreenContent = () => {
+
+    const navigation = useNavigation();
 
     const [cardName, setCardName] = useState('');
     const [lastDigits, setLastDigits] = useState('');
@@ -112,8 +119,16 @@ const CardScreen = () => {
         }
     };
 
+    const handleButtonClick = () => {
+        navigation.navigate('Платежи');
+    };
+
+    const handleTicketClick = () => {
+        navigation.navigate('Билеты')
+    }
 
     return (
+
 
         <View style={styles.container}>
 
@@ -140,7 +155,7 @@ const CardScreen = () => {
 
                 <View style={styles.cardInfoContainer}>
 
-                    <View style={{ flexDirection: 'row' }}>
+                    <View style={{ flexDirection: 'row', marginLeft:"10px" }}>
                         <TextInput
                             style={{ width: "70%", fontWeight: "bold" }}
                             placeholder="Название карты"
@@ -149,14 +164,14 @@ const CardScreen = () => {
                         />
 
                         <TextInput
-                            style={{ width: "28%", textAlign: 'right' }}
+                            style={{ width: "28%", textAlign: 'right', marginRight:"15px" }}
                             placeholder="Последние 4 цифры"
                             value={lastDigits}
                             onChangeText={(text) => setLastDigits(text)}
                         />
                     </View>
 
-                    <View style={{ flexDirection: 'row' }}>
+                    <View style={{ flexDirection: 'row', marginLeft: '10px' }}>
 
                         <View style={{ width: '75%' }}>
 
@@ -220,21 +235,22 @@ const CardScreen = () => {
 
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 16 }}>
 
-                <TouchableOpacity style={styles.actionButton} onPress={() => console.log('Пополнить')}>
+                <TouchableOpacity style={styles.actionButton} onPress={handleButtonClick}>
 
-                    < FontAwesome name="mobile-phone" size={55} style={styles.touchable} />
+                    <FontAwesome name="mobile-phone" size={55} style={styles.touchable} />
+
                     <Text style={{ textAlign: 'center' }}>Оплатить по коду</Text>
 
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.actionButton} onPress={() => console.log('Оплатить по коду Onay QR')}>
+                <TouchableOpacity style={styles.actionButton} onPress={handleButtonClick}>
 
                     < FontAwesome name="qrcode" size={55} style={styles.touchableOrange} />
                     <Text style={{ textAlign: 'center' }}>Onay QR</Text>
 
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.actionButton} onPress={() => console.log('Мои билеты')}>
+                <TouchableOpacity style={styles.actionButton} onPress={handleTicketClick}>
 
                     < FontAwesome name="ticket" size={55} style={styles.touchable} />
 
@@ -243,7 +259,9 @@ const CardScreen = () => {
                 </TouchableOpacity>
             </View>
         </View>
+
     );
 };
 
-export default CardScreen;
+
+export default CardScreenContent;
