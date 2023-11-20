@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
-import Ticket from './Ticket';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useEffect, useState } from "react";
+import { View, ScrollView, StyleSheet } from "react-native";
+import Ticket from "./Ticket";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const TicketsScreen = () => {
-  
   const [tickets, setTickets] = useState([]);
 
   useEffect(() => {
@@ -13,12 +12,12 @@ const TicketsScreen = () => {
 
   const loadTickets = async () => {
     try {
-      const storedTickets = await AsyncStorage.getItem('tickets');
+      const storedTickets = await AsyncStorage.getItem("tickets");
       if (storedTickets) {
         setTickets(JSON.parse(storedTickets));
       }
     } catch (error) {
-      console.error('Error loading tickets:', error);
+      console.error("Error loading tickets:", error);
     }
   };
 
