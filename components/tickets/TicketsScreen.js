@@ -13,8 +13,11 @@ const TicketsScreen = () => {
   const loadTickets = async () => {
     try {
       const storedTickets = await AsyncStorage.getItem("tickets");
+      console.log("Stored Tickets:", storedTickets);
+
       if (storedTickets) {
         setTickets(JSON.parse(storedTickets));
+        console.log("Билеты загружены!");
       }
     } catch (error) {
       console.error("Error loading tickets:", error);
@@ -24,15 +27,18 @@ const TicketsScreen = () => {
   return (
     <View style={styles.container}>
       <ScrollView>
-        {tickets.map((ticket, index) => (
-          <Ticket
-            key={index}
-            code={ticket.code}
-            time={ticket.time}
-            price={ticket.price}
-            verificationCode={ticket.verificationCode}
-          />
-        ))}
+        {tickets.map((ticket, index) => {
+          console.log("Ticket Data:", ticket); // Add this line for debugging
+          return (
+            <Ticket
+              key={index}
+              code={ticket.code}
+              time={ticket.time}
+              price={ticket.price}
+              verificationCode={ticket.verificationCode}
+            />
+          );
+        })}
       </ScrollView>
     </View>
   );

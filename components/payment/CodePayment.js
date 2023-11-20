@@ -77,21 +77,24 @@ const CodePayment = () => {
   };
 
   const handleConfirmationButtonClick = async () => {
-    console.log('handled!');
+    console.log("handled!");
     const newTicket = {
       code: code,
       time: new Date().toLocaleTimeString(),
       price: 100,
       verificationCode: generateVerificationCode(),
     };
-  
+
     // Save the new ticket to AsyncStorage
-    saveTicket(newTicket);
+    await saveTicket(newTicket);
+
+    // Log the current AsyncStorage data
+    const storedTickets = await AsyncStorage.getItem("tickets");
+    console.log("Stored Tickets:", storedTickets);
   
     // Update the state with the new ticket
     setTickets([...tickets, newTicket]);
   };
-  
 
   const generateVerificationCode = () => {
     // Генерация кода проверки, например, случайной буквы и четырех случайных цифр
@@ -196,15 +199,10 @@ const CodePayment = () => {
               borderRadius: 25,
               backgroundColor: "#ffc001",
               width: "75%",
-              
             }}
             onPress={handlePaymentButtonClick}
           >
-            <Text
-              style={{ textAlign: "center" }}
-            >
-              Оплатить
-            </Text>
+            <Text style={{ textAlign: "center" }}>Оплатить</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
