@@ -197,7 +197,7 @@ const CodePayment = () => {
                     </TouchableOpacity>
 
                     <Text style={{ width: '60%', fontSize: 12, color: 'grey', marginTop: 20 }}>*Код транспортного средства, товара или услуги указан на терминале ONAY!
-                        <br></br>либо на кассе.</Text>
+                     либо на кассе.</Text>
 
                 </View>
 
